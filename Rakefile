@@ -11,12 +11,14 @@ begin
     gem.homepage = "http://github.com/twilson63/js-get"
     gem.authors = ["Tom Wilson"]
     gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
-    gem.add_dependency('rest_client', '>= 1.0.3')
+    gem.add_dependency('rest-client', '>= 1.0.3')
     gem.add_dependency('crack', '>= 0.1.2')
+    gem.has_rdoc = true
     
     
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
+  Jeweler::GemcutterTasks.new
 rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"
 end
