@@ -1,6 +1,15 @@
 = js-get
 
-Description goes here.
+== Usage 
+ js-get [options] list|install|uninstall javascript_name
+
+   For help use: js-get --help
+
+== Options
+   -h, --help          Displays help message
+   -v, --version       Displays version
+   -q, --quiet         Output as little as possible, overrides verbose
+   -V, --verbose       Verbose output
 
 == Note on Patches/Pull Requests
  

@@ -41,7 +41,7 @@ require 'crack'
 require 'fileutils'
 
 class App
-  VERSION = '0.1.4'
+  VERSION = '0.1.5'
   JSDIR = ENV['JSDIR'] || "public/javascripts"
   HOST = ENV['JSGET_HOST'] || "http://js-get.jackhq.com"
   
