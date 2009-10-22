@@ -139,15 +139,18 @@ class App
     end
     
     def install
+      # Remove First Argument
+      @arguments.slice!(0)
       # Install Javascript
-      js_name = @arguments[1]
-      puts "Installing Javascript - #{js_name}"  if @options.verbose
-      jlib = Crack::JSON.parse(RestClient.get("#{HOST}/scripts/#{js_name}"))
-      FileUtils.mkpath(JSDIR)
-      File.open([JSDIR, "#{js_name}.js"].join('/'), 'w') do |f|
-        f.write(RestClient.get(jlib["src_url"])) 
+      @arguments.each do |js_name|
+        puts "Installing Javascript - #{js_name}"  if @options.verbose
+        jlib = Crack::JSON.parse(RestClient.get("#{HOST}/scripts/#{js_name}"))
+        FileUtils.mkpath(JSDIR)
+        File.open([JSDIR, "#{js_name}.js"].join('/'), 'w') do |f|
+          f.write(RestClient.get(jlib["src_url"])) 
+        end
+        puts "Successfully Installed - #{js_name}" if @options.verbose
       end
-      puts "Successfully Installed - #{js_name}" if @options.verbose
     rescue
       puts "Could not locate javascript library on #{HOST}"
     end
