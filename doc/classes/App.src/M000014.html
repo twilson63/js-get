@@ -10,12 +10,13 @@
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File bin/js-get, line 166</span>
+  <pre><span class="ruby-comment cmt"># File bin/js-get, line 168</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">uninstall</span>
-      <span class="ruby-identifier">js_name</span> = <span class="ruby-ivar">@argument</span>[<span class="ruby-value">1</span>]
-      <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Removing Javascript - #{js_name}&quot;</span>
-      <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">rm</span> <span class="ruby-node">%w{ [JSDIR,&quot;#{js_name}.js&quot;].join('/') }</span>
-      <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Successfully removed javascript library - #{js_name}&quot;</span>
+      <span class="ruby-ivar">@arguments</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">js_name</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Removing Javascript - #{js_name}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">verbose</span>
+        <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">rm</span> [ [<span class="ruby-constant">JSDIR</span>,<span class="ruby-node">&quot;#{js_name}.js&quot;</span>].<span class="ruby-identifier">join</span>(<span class="ruby-value str">'/'</span>) ]
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Successfully removed javascript library - #{js_name}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">verbose</span>
+      <span class="ruby-keyword kw">end</span>
     <span class="ruby-keyword kw">rescue</span>
       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Could not remove javascript library&quot;</span>
     <span class="ruby-keyword kw">end</span></pre>

@@ -10,17 +10,18 @@
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File bin/js-get, line 144</span>
+  <pre><span class="ruby-comment cmt"># File bin/js-get, line 145</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">install</span>
       <span class="ruby-comment cmt"># Install Javascript</span>
-      <span class="ruby-identifier">js_name</span> = <span class="ruby-ivar">@arguments</span>[<span class="ruby-value">1</span>]
-      <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Installing Javascript - #{js_name}&quot;</span>
-      <span class="ruby-identifier">jlib</span> = <span class="ruby-constant">Crack</span><span class="ruby-operator">::</span><span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-constant">RestClient</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;#{HOST}/scripts/#{js_name}&quot;</span>))
-      <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkpath</span>(<span class="ruby-constant">JSDIR</span>)
-      <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>([<span class="ruby-constant">JSDIR</span>, <span class="ruby-node">&quot;#{js_name}.js&quot;</span>].<span class="ruby-identifier">join</span>(<span class="ruby-value str">'/'</span>), <span class="ruby-value str">'w'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
-        <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span>(<span class="ruby-constant">RestClient</span>.<span class="ruby-identifier">get</span>(<span class="ruby-identifier">jlib</span>[<span class="ruby-value str">&quot;src_url&quot;</span>])) 
+      <span class="ruby-ivar">@arguments</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">js_name</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Installing Javascript - #{js_name}&quot;</span>  <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">verbose</span>
+        <span class="ruby-identifier">jlib</span> = <span class="ruby-constant">Crack</span><span class="ruby-operator">::</span><span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-constant">RestClient</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;#{HOST}/scripts/#{js_name}&quot;</span>))
+        <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkpath</span>(<span class="ruby-constant">JSDIR</span>)
+        <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>([<span class="ruby-constant">JSDIR</span>, <span class="ruby-node">&quot;#{js_name}.js&quot;</span>].<span class="ruby-identifier">join</span>(<span class="ruby-value str">'/'</span>), <span class="ruby-value str">'w'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span>(<span class="ruby-constant">RestClient</span>.<span class="ruby-identifier">get</span>(<span class="ruby-identifier">jlib</span>[<span class="ruby-value str">&quot;src_url&quot;</span>])) 
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Successfully Installed - #{js_name}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">verbose</span>
       <span class="ruby-keyword kw">end</span>
-      <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Successfully Installed - #{js_name}&quot;</span>
     <span class="ruby-keyword kw">rescue</span>
       <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Could not locate javascript library on #{HOST}&quot;</span>
     <span class="ruby-keyword kw">end</span></pre>

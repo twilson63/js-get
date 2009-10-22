@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{js-get}
-  s.version = "0.1.3"
+  s.version = "0.1.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Tom Wilson"]
@@ -25,6 +25,31 @@ Gem::Specification.new do |s|
      "README.rdoc",
      "Rakefile",
      "VERSION",
+     "bin/js-get",
+     "doc/classes/App.html",
+     "doc/classes/App.src/M000001.html",
+     "doc/classes/App.src/M000002.html",
+     "doc/classes/App.src/M000003.html",
+     "doc/classes/App.src/M000004.html",
+     "doc/classes/App.src/M000005.html",
+     "doc/classes/App.src/M000006.html",
+     "doc/classes/App.src/M000007.html",
+     "doc/classes/App.src/M000008.html",
+     "doc/classes/App.src/M000009.html",
+     "doc/classes/App.src/M000010.html",
+     "doc/classes/App.src/M000011.html",
+     "doc/classes/App.src/M000012.html",
+     "doc/classes/App.src/M000013.html",
+     "doc/classes/App.src/M000014.html",
+     "doc/classes/App.src/M000015.html",
+     "doc/created.rid",
+     "doc/files/bin/js-get.html",
+     "doc/fr_class_index.html",
+     "doc/fr_file_index.html",
+     "doc/fr_method_index.html",
+     "doc/index.html",
+     "doc/rdoc-style.css",
+     "js-get.gemspec",
      "lib/js-get.rb",
      "test/helper.rb",
      "test/test_js-get.rb"

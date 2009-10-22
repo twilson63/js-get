@@ -10,9 +10,13 @@
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File bin/js-get, line 138</span>
+  <pre><span class="ruby-comment cmt"># File bin/js-get, line 135</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">process_command</span>
-      <span class="ruby-identifier">send</span>(<span class="ruby-ivar">@arguments</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">to_sym</span>)
+      <span class="ruby-identifier">command</span> = <span class="ruby-ivar">@arguments</span>[<span class="ruby-value">0</span>]
+      <span class="ruby-comment cmt"># Remove First Argument</span>
+      <span class="ruby-ivar">@arguments</span>.<span class="ruby-identifier">slice!</span>(<span class="ruby-value">0</span>)
+      
+      <span class="ruby-identifier">send</span>(<span class="ruby-identifier">command</span>.<span class="ruby-identifier">to_sym</span>)
       
       <span class="ruby-comment cmt">#process_standard_input # [Optional]</span>
     <span class="ruby-keyword kw">end</span></pre>
