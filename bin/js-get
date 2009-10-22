@@ -1,0 +1,189 @@
+#!/usr/bin/env ruby 
+
+# == Synopsis 
+#   This is a command line application that helps install javascript in your app.
+#   
+#
+# == Examples
+#   This command does install jquery in your public/javascripts folder.
+#     js-get install jquery
+#
+#   Other examples:
+#     js-get list 
+#     js-get uninstall jquery
+#
+# == Usage 
+#   js-get [options] list|install|uninstall javascript_name
+#
+#   For help use: js-get --help
+#
+# == Options
+#   -h, --help          Displays help message
+#   -v, --version       Displays version
+#   -q, --quiet         Output as little as possible, overrides verbose
+#   -V, --verbose       Verbose output
+#   TO DO - add additional options
+#
+# == Author
+#   Tom Wilson
+#
+# == Copyright
+#   Copyright (c) 2008 Jack Russell Software Company. Licensed under the MIT License:
+#   http://www.opensource.org/licenses/mit-license.php
+
+
+require 'optparse' 
+require 'rdoc/usage'
+require 'ostruct'
+require 'date'
+require 'rest_client'
+require 'crack'
+require 'fileutils'
+
+class App
+  VERSION = '0.1.3'
+  JSDIR = ENV['JSDIR'] || "public/javascripts"
+  HOST = ENV['JSGET_HOST'] || "http://js-get.jackhq.com"
+  
+  attr_reader :options
+
+  def initialize(arguments, stdin)
+    @arguments = arguments
+    @stdin = stdin
+    
+    # Set defaults
+    @options = OpenStruct.new
+    @options.verbose = false
+    @options.quiet = false
+    # TO DO - add additional defaults
+  end
+
+  # Parse options, check arguments, then process the command
+  def run
+        
+    if parsed_options? && arguments_valid? 
+      
+      puts "Start at #{DateTime.now}\n\n" if @options.verbose
+      
+      output_options if @options.verbose # [Optional]
+            
+      process_arguments            
+      process_command
+      
+      puts "\nFinished at #{DateTime.now}" if @options.verbose
+      
+    else
+      output_usage
+    end
+      
+  end
+  
+  protected
+  
+    def parsed_options?
+      
+      # Specify options
+      opts = OptionParser.new 
+      opts.on('-v', '--version')    { output_version ; exit 0 }
+      opts.on('-h', '--help')       { output_help }
+      opts.on('-V', '--verbose')    { @options.verbose = true }  
+      opts.on('-q', '--quiet')      { @options.quiet = true }
+      # TO DO - add additional options
+            
+      opts.parse!(@arguments) rescue return false
+      
+      process_options
+      true      
+    end
+
+    # Performs post-parse processing on options
+    def process_options
+      @options.verbose = false if @options.quiet
+    end
+    
+    def output_options
+      puts "Options:\n"
+      
+      @options.marshal_dump.each do |name, val|        
+        puts "  #{name} = #{val}"
+      end
+    end
+
+    # True if required arguments were provided
+    def arguments_valid?
+      true if ['install','list','uninstall'].include?(@arguments[0])
+    end
+    
+    # Setup the arguments
+    def process_arguments
+      # TO DO - place in local vars, etc
+    end
+    
+    def output_help
+      output_version
+      RDoc::usage() #exits app
+    end
+    
+    def output_usage
+      RDoc::usage('usage') # gets usage from comments above
+    end
+    
+    def output_version
+      puts "#{File.basename(__FILE__)} version #{VERSION}"
+    end
+    
+    def process_command
+      send(@arguments[0].to_sym)
+      
+      #process_standard_input # [Optional]
+    end
+    
+    def install
+      # Install Javascript
+      js_name = @arguments[1]
+      puts "Installing Javascript - #{js_name}"  if @options.verbose
+      jlib = Crack::JSON.parse(RestClient.get("#{HOST}/scripts/#{js_name}"))
+      FileUtils.mkpath(JSDIR)
+      File.open([JSDIR, "#{js_name}.js"].join('/'), 'w') do |f|
+        f.write(RestClient.get(jlib["src_url"])) 
+      end
+      puts "Successfully Installed - #{js_name}" if @options.verbose
+    rescue
+      puts "Could not locate javascript library on #{HOST}"
+    end
+    
+    def list
+      # List Libraries
+      libraries = Crack::JSON.parse(RestClient.get("#{HOST}/scripts.json"))
+      libraries.each do |lib|
+        puts lib["name"]
+      end
+    end
+    
+    def uninstall
+      js_name = @argument[1]
+      puts "Removing Javascript - #{js_name}" if @options.verbose
+      FileUtils.rm %w{ [JSDIR,"#{js_name}.js"].join('/') }
+      puts "Successfully removed javascript library - #{js_name}" if @options.verbose
+    rescue
+      puts "Could not remove javascript library"
+    end
+
+    def process_standard_input
+      input = @stdin.read      
+      # TO DO - process input
+      
+      # [Optional]
+      #@stdin.each do |line| 
+      #  # TO DO - process each line
+      #end
+    end
+end
+
+
+# TO DO - Add your Modules, Classes, etc
+
+
+# Create and run the application
+app = App.new(ARGV, STDIN)
+app.run

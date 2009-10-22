@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>uninstall (App)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File bin/js-get, line 166</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">uninstall</span>
+      <span class="ruby-identifier">js_name</span> = <span class="ruby-ivar">@argument</span>[<span class="ruby-value">1</span>]
+      <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Removing Javascript - #{js_name}&quot;</span>
+      <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">rm</span> <span class="ruby-node">%w{ [JSDIR,&quot;#{js_name}.js&quot;].join('/') }</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Successfully removed javascript library - #{js_name}&quot;</span>
+    <span class="ruby-keyword kw">rescue</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Could not remove javascript library&quot;</span>
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>
