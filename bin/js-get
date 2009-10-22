@@ -133,14 +133,16 @@ class App
     end
     
     def process_command
-      send(@arguments[0].to_sym)
+      command = @arguments[0]
+      # Remove First Argument
+      @arguments.slice!(0)
+      
+      send(command.to_sym)
       
       #process_standard_input # [Optional]
     end
     
     def install
-      # Remove First Argument
-      @arguments.slice!(0)
       # Install Javascript
       @arguments.each do |js_name|
         puts "Installing Javascript - #{js_name}"  if @options.verbose
@@ -164,10 +166,11 @@ class App
     end
     
     def uninstall
-      js_name = @argument[1]
-      puts "Removing Javascript - #{js_name}" if @options.verbose
-      FileUtils.rm %w{ [JSDIR,"#{js_name}.js"].join('/') }
-      puts "Successfully removed javascript library - #{js_name}" if @options.verbose
+      @arguments.each do |js_name|
+        puts "Removing Javascript - #{js_name}" if @options.verbose
+        FileUtils.rm [ [JSDIR,"#{js_name}.js"].join('/') ]
+        puts "Successfully removed javascript library - #{js_name}" if @options.verbose
+      end
     rescue
       puts "Could not remove javascript library"
     end
