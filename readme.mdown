@@ -1,0 +1,56 @@
+# js-get
+
+## About
+
+js-get is a simple command client application that connects to a js-get server
+that provides an index of all the javascript libraries that are available for 
+your web project.
+
+## Configuration
+
+js-get is defaulted to use the following settings:
+
+    JSGET_HOST = http://js-get.jackhq.com
+    JSDIR = public/javascripts
+
+You can modify these settings in your environment file or the environment variables
+manager.
+
+## Installation
+
+You need ruby, rubygems, and gemcutter to install js-get.
+
+    gem install js-get
+
+## Usage
+
+Once installed it is automatcally available to you via the command line. 
+js-get has three simple commands:
+
+* list - Lists all javascript libraries on the server.
+
+    js-get list
+
+
+* install - Installs the javascript library specified.
+
+    js-get install jquery
+
+
+* uninstall - Removes the javascript library specified from you current project.
+
+    js-get uninstall jquery
+
+## Update to latest version
+
+    gem update js-get
+
+## Support
+
+Tweet any support requests to http://twitter.com/jsget
+
+
+## Uninstall
+
+    gem uninstall js-get
+   
